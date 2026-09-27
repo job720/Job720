@@ -10,21 +10,21 @@
 
 
 
-    <title>9 月 24 日这一天：招聘方新标发布 2,104 个岗，撤下 1,178 个 · 博客</title>
-    <meta name="description" content="北京时间 9 月 24 日一整天，招聘方自己标着当天发布的岗 2,104 个；同一天不再出现在我们观测里的 1,178 个。全库在招 141,388 个 —— 下面四张图是当天的三种切法，外加最近 8 天的走势。">
+    <title>「全国的前端与客户端岗」有 1,528 个岗，55 座城市分着挂 · 博客</title>
+    <meta name="description" content="「全国的前端与客户端岗」在招 1,528 个，分布在「北京」「上海」「深圳」等城市，近七天新挂 28 个。">
 
-    <link rel="canonical" href="https://job720.goxba.com/blog/2026-09-24-market-daily">
+    <link rel="canonical" href="https://job720.goxba.com/blog/前端与客户端-2026-09-27">
     <meta name="robots" content="index,follow">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="悦影悦靓人工智能科技（惠州）有限公司">
-    <meta property="og:title" content="9 月 24 日这一天：招聘方新标发布 2,104 个岗，撤下 1,178 个">
-    <meta property="og:description" content="北京时间 9 月 24 日一整天，招聘方自己标着当天发布的岗 2,104 个；同一天不再出现在我们观测里的 1,178 个。全库在招 141,388 个 —— 下面四张图是当天的三种切法，外加最近 8 天的走势。">
-    <meta property="og:url" content="https://job720.goxba.com/blog/2026-09-24-market-daily">
+    <meta property="og:title" content="「全国的前端与客户端岗」有 1,528 个岗，55 座城市分着挂">
+    <meta property="og:description" content="「全国的前端与客户端岗」在招 1,528 个，分布在「北京」「上海」「深圳」等城市，近七天新挂 28 个。">
+    <meta property="og:url" content="https://job720.goxba.com/blog/前端与客户端-2026-09-27">
     <meta property="og:image" content="https://job720.goxba.com/images/og.png">
     <meta name="twitter:card" content="summary_large_image">
 
 
-      <link rel="alternate" type="text/markdown" href="2026-09-24-market-daily.md">
+      <link rel="alternate" type="text/markdown" href="2026-09-27-前端与客户端-2026-09-27.md">
 
     <style>      /* ── 设计 token（2026-09-15 引入）─────────────────────────────
          起因：客户反馈"UI 很 low"。盘点下来不是审美问题，是**缺刻度** ——
@@ -1530,6 +1530,99 @@
       .rt-doc > summary { cursor: pointer; font-size: var(--t-sm); color: #2563eb; padding: 4px 0; }
       .nowrap { white-space: nowrap; }
 
+      /* ── 后台外壳：左栏大类 + 右侧顶上 tab（2026-09-25）─────────────────
+         起因：用户否掉"把全站入口铺进一页"的旧总览（原话「太凌乱了……一页内容又长又臭」），
+         指定照 Shopify / WordPress 的骨架做：**入口归常驻菜单，页面只管自己那一屏**。
+         三层各管一件事：站导航（前台）/ 左栏（模块=大类）/ tab（模块里的页）。
+         类名一律 `ad-` 前缀（理由同上面的 rt-/obs-/ct-：这张表全站共用，通用名会撞）。
+         ⛔ 左栏与手机折叠菜单是**同一份数据的两段 markup**（≥1024 显示左栏、以下显示折叠菜单），
+            所以选择器写成 `.adrail a, .admob .panel a` 这种并列形式 —— 别各写一套再漂掉。 */
+      .adcols { display: block; }
+      @media (min-width: 1024px) {
+        .adcols { display: grid; grid-template-columns: 196px minmax(0, 1fr); column-gap: 32px; }
+      }
+
+      .adrail { display: none; }
+      @media (min-width: 1024px) {
+        .adrail { display: block; position: sticky; top: 10px; align-self: start; }
+      }
+      .adrail a, .admob .panel a { display: flex; align-items: center; gap: 8px;
+        text-decoration: none; color: var(--fg-2); font-size: var(--t-md);
+        line-height: var(--lh-tight); padding: 9px 12px; border-radius: var(--r-sm);
+        white-space: nowrap; }
+      .adrail a:hover, .admob .panel a:hover { background: var(--chip); color: var(--fg); }
+      .adrail a.on, .admob .panel a.on { background: #111; color: #fff; font-weight: 600; }
+      .adrail a .n, .admob .panel a .n { margin-left: auto; font-size: var(--t-cap); font-weight: 600;
+        background: #d97706; color: #fff; border-radius: var(--r-pill); padding: 0 7px; }
+      .adrail a.on .n, .admob .panel a.on .n { background: rgba(255,255,255,.28); }
+      .adrail a.adrail-soft, .admob .panel a.adrail-soft { color: var(--dim); font-size: var(--t-sm); }
+      .adrail hr, .admob .panel hr { border: 0; border-top: 1px solid var(--line); margin: 8px 6px; }
+
+      .admob { display: block; position: sticky; top: 0; z-index: 5; background: var(--bg);
+        padding: 8px 0 6px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+      @media (min-width: 1024px) { .admob { display: none; } }
+      .admob > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center;
+        gap: 8px; min-height: 44px; padding: 6px 14px; border: 1px solid var(--line);
+        border-radius: var(--r-pill); font-size: var(--t-sm); white-space: nowrap; }
+      .admob > summary::-webkit-details-marker { display: none; }
+      .admob > summary .cur { color: var(--dim); }
+      .admob[open] > summary { border-color: #2563eb; color: #2563eb; }
+      .admob .panel { border: 1px solid var(--line); border-radius: var(--r-md);
+        margin-top: 8px; padding: 6px; }
+      /* ⛔ 手机上每一项都要点到（≥44pt）—— 行内元素上写 min-height 不生效，所以上面那条
+         必须带 `display:flex`（这坑在样片里当场踩到：菜单项被压成 20px） */
+      @media (max-width: 1023px) { .admob .panel a { min-height: 44px; } }
+
+      .adtabs { display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 14px 0 6px;
+        padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+      .adtabs a { display: inline-flex; align-items: center; gap: 6px; padding: 5px 13px;
+        border-radius: var(--r-pill); text-decoration: none; color: var(--fg-2);
+        font-size: var(--t-sm); white-space: nowrap; background: var(--chip); }
+      .adtabs a:hover { background: #e5e7eb; color: var(--fg); }
+      .adtabs a.on { background: #2563eb; color: #fff; font-weight: 600; }
+      /* 「财务」那种 16 页的模块多摆一行：上面是组（收钱/付钱/报表/设置），下面是组里的页。
+         组那行压淡一档，才不会和"页"混成同一层。 */
+      .adtabs-g { border-bottom: 0; padding-bottom: 0; margin-bottom: 2px; }
+      .adtabs-g a { background: none; border: 1px solid var(--line); font-weight: 600; }
+      .adtabs-g a.on { background: #111; border-color: #111; color: #fff; }
+      .adtabs-sub { margin-top: 6px; }
+      @media (max-width: 1023px) {
+        .adtabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+        .adtabs::-webkit-scrollbar { display: none; }
+        .adtabs a { flex: none; min-height: 44px; }
+      }
+
+      /* 页头那行小字：你在哪个大类。切大类时靠它不迷路（h1 只说"这一页"） */
+      .eyebrow { margin: 0 0 2px; font-size: var(--t-cap); color: var(--dim); letter-spacing: .04em; }
+
+      /* ── 总览（/admin）的两块：要办的事 + 核心数字 ────────────────────────
+         ⚠️ 栅格用**定列数**不用 auto-fit：这两块的张数是我定的（待办 ≤5、数字 8），
+            auto-fit 在某几档宽度会切出 3 列、末行只剩 2 格（实测 816px 那档就是）。 */
+      .ad-todo { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+      .ad-todoc { display: flex; gap: 11px; align-items: baseline; text-decoration: none;
+        color: var(--fg); border: 1px solid var(--line); border-left: 4px solid #d97706;
+        border-radius: var(--r-md); padding: 11px 13px; }
+      .ad-todoc:hover { border-color: #2563eb59; }
+      /* 数字大、事由小：扫一眼是"有几件"，第二眼才是"什么事" */
+      .ad-todoc-n { flex: none; min-width: 1.5em; font-size: var(--t-xl); font-weight: 600;
+        line-height: var(--lh-tight); font-variant-numeric: tabular-nums; }
+      .ad-todoc b { display: block; font-size: var(--t-md); font-weight: 600;
+        line-height: var(--lh-tight); }
+
+      .ad-kpis { display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr); }
+      @media (min-width: 700px) { .ad-kpis { grid-template-columns: repeat(4, 1fr); } }
+      .ad-kpi { display: block; text-decoration: none; color: var(--fg);
+        border: 1px solid var(--line); border-radius: var(--r-md); padding: 11px 13px; }
+      .ad-kpi:hover { border-color: #2563eb59; }
+      .ad-kpi-n { font-size: var(--t-lg); font-weight: 600; line-height: var(--lh-tight);
+        font-variant-numeric: tabular-nums; }
+      .ad-kpi-l { margin-top: 2px; font-size: var(--t-sm); color: var(--fg-2); }
+      .ad-x { display: block; margin-top: 2px; font-size: var(--t-cap); color: var(--dim); }
+      /* 读不到压灰，⛔ 不用红 —— 红是"出事了"，"读不到"只是没看到，两件事 */
+      .ad-none { color: var(--dim); }
+      .ad-warn { color: #d97706; }
+      .ad-ok { color: #16a34a; }
+
       /* ══ 全站唯一的「卡片」形态（2026-09-22）═════════════════════════════
          起因：用户问"整个网站不能统一用一种卡片吗？"。盘下来 root 里**20 多处**各自
          定义过卡片，光 padding 就有 8 种取值（8/10、10/12、12/14、14/12、14/16、
@@ -1768,7 +1861,7 @@ a.jch-rrow:hover .jch-pc { color: var(--fg); }
   .jch-motion .jch-arc, .jch-motion .jch-lb, .jch-motion .jch-pc { animation: none !important; }
 }
 </style>
-    <script type="application/ld+json">[{"@context":"https://schema.org","@id":"https://job720.goxba.com/#website","@type":"WebSite","alternateName":"Job720 · 科技与制造行业的求职信息枢纽","inLanguage":"zh-CN","name":"Job720","potentialAction":{"@type":"SearchAction","query-input":"required name=search_term_string","target":{"@type":"EntryPoint","urlTemplate":"https://job720.goxba.com/?q={search_term_string}"}},"url":"https://job720.goxba.com/"},{"@context":"https://schema.org","@type":"Organization","alternateName":["Job 720","job720","Job720 求职"],"brand":"Job720","description":"科技与制造行业的求职信息枢纽","logo":"https://job720.goxba.com/favicon.svg","name":"悦影悦靓人工智能科技（惠州）有限公司","url":"https://job720.goxba.com/"},{"@context":"https://schema.org","@type":"Article","author":{"@context":"https://schema.org","@type":"Organization","alternateName":["Job 720","job720","Job720 求职"],"brand":"Job720","description":"科技与制造行业的求职信息枢纽","logo":"https://job720.goxba.com/favicon.svg","name":"悦影悦靓人工智能科技（惠州）有限公司","url":"https://job720.goxba.com/"},"dateModified":"2026-09-24T16:08:36Z","datePublished":"2026-09-24T16:08:36Z","description":"北京时间 9 月 24 日一整天，招聘方自己标着当天发布的岗 2,104 个；同一天不再出现在我们观测里的 1,178 个。全库在招 141,388 个 —— 下面四张图是当天的三种切法，外加最近 8 天的走势。","headline":"9 月 24 日这一天：招聘方新标发布 2,104 个岗，撤下 1,178 个","image":["https://job720.goxba.com/images/og.png"],"inLanguage":"zh-CN","isPartOf":{"@type":"CollectionPage","name":"博客","url":"https://job720.goxba.com/blog"},"mainEntityOfPage":{"@id":"https://job720.goxba.com/blog/2026-09-24-market-daily","@type":"WebPage"},"publisher":{"@context":"https://schema.org","@type":"Organization","alternateName":["Job 720","job720","Job720 求职"],"brand":"Job720","description":"科技与制造行业的求职信息枢纽","logo":"https://job720.goxba.com/favicon.svg","name":"悦影悦靓人工智能科技（惠州）有限公司","url":"https://job720.goxba.com/"},"url":"https://job720.goxba.com/blog/2026-09-24-market-daily"}]</script>
+    <script type="application/ld+json">[{"@context":"https://schema.org","@id":"https://job720.goxba.com/#website","@type":"WebSite","alternateName":"Job720 · 科技与制造行业的求职信息枢纽","inLanguage":"zh-CN","name":"Job720","potentialAction":{"@type":"SearchAction","query-input":"required name=search_term_string","target":{"@type":"EntryPoint","urlTemplate":"https://job720.goxba.com/?q={search_term_string}"}},"url":"https://job720.goxba.com/"},{"@context":"https://schema.org","@type":"Organization","alternateName":["Job 720","job720","Job720 求职"],"brand":"Job720","description":"科技与制造行业的求职信息枢纽","logo":"https://job720.goxba.com/favicon.svg","name":"悦影悦靓人工智能科技（惠州）有限公司","url":"https://job720.goxba.com/"},{"@context":"https://schema.org","@type":"Article","author":{"@context":"https://schema.org","@type":"Organization","alternateName":["Job 720","job720","Job720 求职"],"brand":"Job720","description":"科技与制造行业的求职信息枢纽","logo":"https://job720.goxba.com/favicon.svg","name":"悦影悦靓人工智能科技（惠州）有限公司","url":"https://job720.goxba.com/"},"dateModified":"2026-09-27T01:30:15Z","datePublished":"2026-09-27T01:30:05Z","description":"「全国的前端与客户端岗」在招 1,528 个，分布在「北京」「上海」「深圳」等城市，近七天新挂 28 个。","headline":"「全国的前端与客户端岗」有 1,528 个岗，55 座城市分着挂","image":["https://job720.goxba.com/images/og.png"],"inLanguage":"zh-CN","isPartOf":{"@type":"CollectionPage","name":"博客","url":"https://job720.goxba.com/blog"},"mainEntityOfPage":{"@id":"https://job720.goxba.com/blog/前端与客户端-2026-09-27","@type":"WebPage"},"publisher":{"@context":"https://schema.org","@type":"Organization","alternateName":["Job 720","job720","Job720 求职"],"brand":"Job720","description":"科技与制造行业的求职信息枢纽","logo":"https://job720.goxba.com/favicon.svg","name":"悦影悦靓人工智能科技（惠州）有限公司","url":"https://job720.goxba.com/"},"url":"https://job720.goxba.com/blog/前端与客户端-2026-09-27"}]</script>
   </head>
   <body>
 
@@ -1793,46 +1886,14 @@ a.jch-rrow:hover .jch-pc { color: var(--fg); }
     <p class="obs-kicker">
       <a href="https://job720.goxba.com/blog?src=gh">博客</a>
     </p>
-    <h1>9 月 24 日这一天：招聘方新标发布 2,104 个岗，撤下 1,178 个</h1>
-    <p class="blead">北京时间 9 月 24 日一整天，招聘方自己标着当天发布的岗 2,104 个；同一天不再出现在我们观测里的 1,178 个。全库在招 141,388 个 —— 下面四张图是当天的三种切法，外加最近 8 天的走势。</p>
+    <h1>「全国的前端与客户端岗」有 1,528 个岗，55 座城市分着挂</h1>
+    <p class="blead">「全国的前端与客户端岗」在招 1,528 个，分布在「北京」「上海」「深圳」等城市，近七天新挂 28 个。</p>
   </header>
 
   
     
     
-    <p class="obs-ctx">这一天新标发布最多的几家是：美团 486 个、东风汽车 379 个、网易 139 个；按城市看是 北京 474 个、杭州 193 个、上海 188 个。撤下最多的是 ABB 206 个、福特 81 个、NVIDIA 65 个。</p>
-  
-  
-    
-    <h2 class="h2">这一天，招聘方那边</h2>
-  
-  
-    
-    
-        
-        <div class="bl-fig"><figure class="jch jch-motion"><p class="jch-t">最近 8 天，招聘方新标发布的岗</p><p class="jch-s">取数 2026-09-24 ｜ 按招聘方自己标的发布日期 ｜ 来源：招聘方公开发布</p><div class="jch-cols"><span class="jch-col"><span class="jch-cwrap"><span class="jch-cv jch-vmute" style="bottom:132px">2,442</span><i class="jch-cbar jch-mute" style="height:130px"></i></span><span class="jch-ck">09-17</span></span><span class="jch-col"><span class="jch-cwrap"><span class="jch-cv jch-vmute" style="bottom:100px">1,849</span><i class="jch-cbar jch-mute" style="height:98px"></i></span><span class="jch-ck">09-18</span></span><span class="jch-col"><span class="jch-cwrap"><span class="jch-cv jch-vmute" style="bottom:37px">650</span><i class="jch-cbar jch-mute" style="height:35px"></i></span><span class="jch-ck">09-19</span></span><span class="jch-col"><span class="jch-cwrap"><span class="jch-cv jch-vmute" style="bottom:67px">1,217</span><i class="jch-cbar jch-mute" style="height:65px"></i></span><span class="jch-ck">09-20</span></span><span class="jch-col"><span class="jch-cwrap"><span class="jch-cv jch-vmute" style="bottom:96px">1,766</span><i class="jch-cbar jch-mute" style="height:94px"></i></span><span class="jch-ck">09-21</span></span><span class="jch-col"><span class="jch-cwrap"><span class="jch-cv jch-vmute" style="bottom:100px">1,840</span><i class="jch-cbar jch-mute" style="height:98px"></i></span><span class="jch-ck">09-22</span></span><span class="jch-col"><span class="jch-cwrap"><span class="jch-cv jch-vmute" style="bottom:105px">1,939</span><i class="jch-cbar jch-mute" style="height:103px"></i></span><span class="jch-ck">09-23</span></span><span class="jch-col"><span class="jch-cwrap"><span class="jch-cv" style="bottom:114px">2,104</span><i class="jch-cbar" style="height:112px"></i></span><span class="jch-ck">09-24</span></span></div><p class="jch-f">这一天（09-24）是 2,104 个；前一天 1,939 个。</p><p class="jch-f">库里还有 5,254 个在招岗没有发布日期（4%），算不进来 —— 每一根柱子都是下界。</p><div class="jch-foot"><p class="jch-qrow"><img class="jch-qr" loading="lazy" decoding="async" src="https://job720.goxba.com/qr.png?p=%2F%3Fsrc%3Dgh&amp;s=6" width="86" height="86" alt="扫码直达：站上按城市与方向自己筛一遍"><span class="jch-qc">扫码直达 · 站上按城市与方向自己筛一遍</span></p><p class="jch-brand"><img class="jch-mark" src="https://job720.goxba.com/images/logo-mark.svg" alt="" width="18" height="18"><span class="jch-bt"><b class="jch-wm"><span class="jch-wj">Job</span><span class="jch-w7">720</span></b><span class="jch-bl"><span class="jch-slogan">对话 &amp; 成长</span> · job720.<span class="jch-go">go</span><span class="jch-xba">xba</span>.com · <a class="jch-lnk" href="https://job720.goxba.com/?src=gh" title="https://job720.goxba.com/?src=gh">🔗 上站看这批岗位</a></span></span></p></div><figcaption class="jch-sr">近 8 天招聘方自己标着发布的岗，按日期依次是：2026-09-17 2,442 个、2026-09-18 1,849 个、2026-09-19 650 个、2026-09-20 1,217 个、2026-09-21 1,766 个、2026-09-22 1,840 个、2026-09-23 1,939 个、2026-09-24 2,104 个。</figcaption></figure></div>
-    
-  
-  
-    
-    
-        
-        <div class="bl-fig"><figure class="jch jch-motion"><p class="jch-t">9 月 24 日新标发布最多的企业</p><p class="jch-s">取数 2026-09-24 ｜ 按招聘方自己标的发布日期 ｜ 来源：招聘方公开发布</p><div class="jch-rows"><span class="jch-row"><span class="jch-k">美团</span><span class="jch-track"><i class="jch-bar" style="width:100.00%"></i></span><span class="jch-v">486</span></span><span class="jch-row"><span class="jch-k">东风汽车</span><span class="jch-track"><i class="jch-bar" style="width:77.98%"></i></span><span class="jch-v">379</span></span><span class="jch-row"><span class="jch-k">网易</span><span class="jch-track"><i class="jch-bar" style="width:28.60%"></i></span><span class="jch-v">139</span></span><span class="jch-row"><span class="jch-k">苹果</span><span class="jch-track"><i class="jch-bar" style="width:25.31%"></i></span><span class="jch-v">123</span></span><span class="jch-row"><span class="jch-k">吉利汽车</span><span class="jch-track"><i class="jch-bar" style="width:16.87%"></i></span><span class="jch-v">82</span></span><span class="jch-row"><span class="jch-k">腾讯</span><span class="jch-track"><i class="jch-bar" style="width:14.61%"></i></span><span class="jch-v">71</span></span></div><p class="jch-f">只画前 6 家，按数量降序。</p><div class="jch-foot"><p class="jch-qrow"><img class="jch-qr" loading="lazy" decoding="async" src="https://job720.goxba.com/qr.png?p=%2F%3Fsrc%3Dgh&amp;s=6" width="86" height="86" alt="扫码直达：站上按城市与方向自己筛一遍"><span class="jch-qc">扫码直达 · 站上按城市与方向自己筛一遍</span></p><p class="jch-brand"><img class="jch-mark" src="https://job720.goxba.com/images/logo-mark.svg" alt="" width="18" height="18"><span class="jch-bt"><b class="jch-wm"><span class="jch-wj">Job</span><span class="jch-w7">720</span></b><span class="jch-bl"><span class="jch-slogan">对话 &amp; 成长</span> · job720.<span class="jch-go">go</span><span class="jch-xba">xba</span>.com · <a class="jch-lnk" href="https://job720.goxba.com/?src=gh" title="https://job720.goxba.com/?src=gh">🔗 上站看这批岗位</a></span></span></p></div><figcaption class="jch-sr">9 月 24 日新标发布最多的企业依次是：美团 486 个、东风汽车 379 个、网易 139 个、苹果 123 个、吉利汽车 82 个、腾讯 71 个。</figcaption></figure></div>
-    
-  
-  
-    
-    
-        
-        <div class="bl-fig"><figure class="jch jch-motion"><p class="jch-t">9 月 24 日新标发布的岗，来自这些城市</p><p class="jch-s">取数 2026-09-24 ｜ 按招聘方自己标的发布日期 ｜ 来源：招聘方公开发布</p><div class="jch-rows"><span class="jch-row"><span class="jch-k">北京</span><span class="jch-track"><i class="jch-bar" style="width:87.13%"></i></span><span class="jch-v">474</span></span><span class="jch-row"><span class="jch-k">杭州</span><span class="jch-track"><i class="jch-bar" style="width:35.48%"></i></span><span class="jch-v">193</span></span><span class="jch-row"><span class="jch-k">上海</span><span class="jch-track"><i class="jch-bar" style="width:34.56%"></i></span><span class="jch-v">188</span></span><span class="jch-row"><span class="jch-k">深圳</span><span class="jch-track"><i class="jch-bar" style="width:23.16%"></i></span><span class="jch-v">126</span></span><span class="jch-row"><span class="jch-k">武汉</span><span class="jch-track"><i class="jch-bar" style="width:18.01%"></i></span><span class="jch-v">98</span></span><span class="jch-row"><span class="jch-k">宁波</span><span class="jch-track"><i class="jch-bar" style="width:9.19%"></i></span><span class="jch-v">50</span></span></div><div class="jch-rows"><span class="jch-row"><span class="jch-k">未标注</span><span class="jch-track"><i class="jch-bar jch-mute" style="width:100.00%"></i></span><span class="jch-v">544</span></span></div><p class="jch-f">只画前 6 座城市。</p><p class="jch-f">另有 544 个岗的来源页没给城市，单独画成灰的。</p><div class="jch-foot"><p class="jch-qrow"><img class="jch-qr" loading="lazy" decoding="async" src="https://job720.goxba.com/qr.png?p=%2F%3Fsrc%3Dgh&amp;s=6" width="86" height="86" alt="扫码直达：站上按城市与方向自己筛一遍"><span class="jch-qc">扫码直达 · 站上按城市与方向自己筛一遍</span></p><p class="jch-brand"><img class="jch-mark" src="https://job720.goxba.com/images/logo-mark.svg" alt="" width="18" height="18"><span class="jch-bt"><b class="jch-wm"><span class="jch-wj">Job</span><span class="jch-w7">720</span></b><span class="jch-bl"><span class="jch-slogan">对话 &amp; 成长</span> · job720.<span class="jch-go">go</span><span class="jch-xba">xba</span>.com · <a class="jch-lnk" href="https://job720.goxba.com/?src=gh" title="https://job720.goxba.com/?src=gh">🔗 上站看这批岗位</a></span></span></p></div><figcaption class="jch-sr">9 月 24 日新标发布的岗按城市依次是：北京 474 个、杭州 193 个、上海 188 个、深圳 126 个、武汉 98 个、宁波 50 个；另有 544 个没标注城市。</figcaption></figure></div>
-    
-  
-  
-    
-    
-        
-        <div class="bl-fig"><figure class="jch jch-motion"><p class="jch-t">9 月 24 日撤下最多的企业</p><p class="jch-s">取数 2026-09-24 ｜ 「撤下」= 这一天我们没再看到它 ｜ 来源：招聘方公开发布</p><div class="jch-rows"><span class="jch-row"><span class="jch-k">ABB</span><span class="jch-track"><i class="jch-bar" style="width:100.00%"></i></span><span class="jch-v">206</span></span><span class="jch-row"><span class="jch-k">福特</span><span class="jch-track"><i class="jch-bar" style="width:39.32%"></i></span><span class="jch-v">81</span></span><span class="jch-row"><span class="jch-k">NVIDIA</span><span class="jch-track"><i class="jch-bar" style="width:31.55%"></i></span><span class="jch-v">65</span></span><span class="jch-row"><span class="jch-k">美光</span><span class="jch-track"><i class="jch-bar" style="width:26.21%"></i></span><span class="jch-v">54</span></span><span class="jch-row"><span class="jch-k">苹果</span><span class="jch-track"><i class="jch-bar" style="width:19.90%"></i></span><span class="jch-v">41</span></span><span class="jch-row"><span class="jch-k">应用材料</span><span class="jch-track"><i class="jch-bar" style="width:18.93%"></i></span><span class="jch-v">39</span></span></div><p class="jch-f">只画前 6 家。这一天共有 85 家公司在撤。</p><div class="jch-foot"><p class="jch-qrow"><img class="jch-qr" loading="lazy" decoding="async" src="https://job720.goxba.com/qr.png?p=%2F%3Fsrc%3Dgh&amp;s=6" width="86" height="86" alt="扫码直达：站上按城市与方向自己筛一遍"><span class="jch-qc">扫码直达 · 站上按城市与方向自己筛一遍</span></p><p class="jch-brand"><img class="jch-mark" src="https://job720.goxba.com/images/logo-mark.svg" alt="" width="18" height="18"><span class="jch-bt"><b class="jch-wm"><span class="jch-wj">Job</span><span class="jch-w7">720</span></b><span class="jch-bl"><span class="jch-slogan">对话 &amp; 成长</span> · job720.<span class="jch-go">go</span><span class="jch-xba">xba</span>.com · <a class="jch-lnk" href="https://job720.goxba.com/?src=gh" title="https://job720.goxba.com/?src=gh">🔗 上站看这批岗位</a></span></span></p></div><figcaption class="jch-sr">9 月 24 日撤下最多的企业依次是：ABB 206 个、福特 81 个、NVIDIA 65 个、美光 54 个、苹果 41 个、应用材料 39 个。</figcaption></figure></div>
-    
+    <p class="obs-ctx"><p>把「全国的前端与客户端岗」按城市摊开看：1,528 个岗位落在 55 座城市里，「北京」占 539 个。你要投的岗，未必就在离你最近的那一处。</p></p>
   
   
     
@@ -1842,20 +1903,38 @@ a.jch-rrow:hover .jch-pc { color: var(--fg); }
     
     <div class="obs-stats">
       
-        <span class="obs-stat"><b>141,388</b><span>全库在招</span></span>
+        <span class="obs-stat"><b>1,528</b><span>该范围在招</span></span>
       
-        <span class="obs-stat"><b>2,104</b><span>9 月 24 日新标发布</span></span>
+        <span class="obs-stat"><b>55</b><span>座城市</span></span>
       
-        <span class="obs-stat"><b>1,178</b><span>9 月 24 日撤下</span></span>
-      
-        <span class="obs-stat"><b>1,288</b><span>我们第一次看到</span></span>
+        <span class="obs-stat"><b>28</b><span>近七天新挂</span></span>
       
     </div>
   
   
     
+    <h2 class="h2">拆开看</h2>
+  
+  
     
-    <p class="obs-ctx">这一天我们<b>第一次看到</b> 1,288 个岗 —— 这是我们的进度，不是市场：它们全部来自此前就在观测里的来源，当天没有新接的来源。这一天撤下的 1,178 个里没有整源清空 —— 涉及的来源此刻都还有在招岗。</p>
+    <ul class="obs-bullets">
+      
+        <li>「北京」539 个</li>
+      
+        <li>「上海」388 个</li>
+      
+        <li>「深圳」292 个</li>
+      
+    </ul>
+  
+  
+    
+    
+    <p class="obs-ctx"><p>一家公司在一座城市招多少、在别的城市又招多少，这件事没有直觉可比。所以我们把它逐座城市列出来，你自己看。</p></p>
+  
+  
+    
+    <h2 class="h2">读数边界</h2>
   
   
     
@@ -1863,17 +1942,11 @@ a.jch-rrow:hover .jch-pc { color: var(--fg); }
       <h2 class="h2">读数边界</h2>
       <ul class="small">
         
-          <li>样本：我们持续观测的 467 个来源、434 家公司在招的 141,388 个岗。不是全市场。</li>
+          <li>· 样本：我们持续观测的 445 家企业，不是全市场</li>
         
-          <li>窗口：北京时间 9 月 24 日 00:00 – 24:00。</li>
+          <li>· 口径：「在招」= 本轮仍能取到的岗位；分类口径若变更，历史数字会被重算</li>
         
-          <li>「新标发布」= 招聘方自己标的发布日期。在招岗里 136,116 个有这一栏（96%），没有的算不进来 —— 所以它是下界。</li>
-        
-          <li>「撤下」= 这一天我们没再看到它，这一栏没有缺口。两栏口径不同，不要相减。</li>
-        
-          <li>「我们第一次看到」是我们的动作：整批接进一个来源会把它的历史存量一次性入库，看起来像「新挂」，其实不是。</li>
-        
-          <li>库里的历史起于 2026-09-13，所以「连续 N 天在招」这类数要再攒几周才可信。</li>
+          <li>· 新接入的企业会让数字跳变 —— 我们已经排除，但你要知道它会跳</li>
         
       </ul>
     </section>
@@ -1881,28 +1954,28 @@ a.jch-rrow:hover .jch-pc { color: var(--fg); }
   
     
     
-    <p class="obs-ctx">Job720 聚合 AI / 芯片 / 新能源 / 机器人 / 无人机等行业招聘方公开发布的岗位信息，按城市、职能、赛道筛。我们<b>不提供投递</b>，也<b>不收集简历</b>。</p>
+    <p class="obs-ctx">Job720 聚合 AI / 芯片 / 新能源 / 机器人 / 无人机等行业招聘方<strong>公开发布</strong>的岗位信息，按城市、职能、赛道筛。我们不提供投递，也不收集简历。</p>
   
   
     
     
-    <p class="obs-ctx">站上按城市与方向自己筛一遍：<a href="https://job720.goxba.com/?city=%E5%8C%97%E4%BA%AC&amp;src=gh"><b>看北京现在在招的岗 →</b></a></p>
+    <p class="obs-ctx"><p>完整名单在站上，可以按城市再筛一遍：<a href="https://job720.goxba.com/?func=%E5%89%8D%E7%AB%AF%E4%B8%8E%E5%AE%A2%E6%88%B7%E7%AB%AF&amp;src=gh">按城市看 →</a></p></p>
   
   
 
   <p class="obs-live">
-    上面那些数字是这一篇生成那一刻的读数（取数 2026-09-24（北京时间 9 月 24 日全天）），库再涨也不会跟着动。
+    上面那些数字是这一篇生成那一刻的读数（取数 2026-09-27），库再涨也不会跟着动。
     要现在的，去 <a href="https://job720.goxba.com/?src=gh">站上</a>按城市与方向自己筛一遍。
   </p>
 </article>
 
       <footer class="obs-foot">
-        <img src="https://job720.goxba.com/qr.png?p=%2Fblog%2F2026-09-24-market-daily%3Fsrc%3Dgh&amp;s=10" alt="Job720 直达二维码" width="96" height="96" loading="lazy">
+        <img src="https://job720.goxba.com/qr.png?p=%2Fblog%2F%E5%89%8D%E7%AB%AF%E4%B8%8E%E5%AE%A2%E6%88%B7%E7%AB%AF-2026-09-27%3Fsrc%3Dgh&amp;s=10" alt="Job720 直达二维码" width="96" height="96" loading="lazy">
 
         <p class="small dim">
           手机扫这个码，或者直接在浏览器里打开
-          <a href="https://job720.goxba.com/blog/2026-09-24-market-daily?src=gh">job720.goxba.com/blog/2026-09-24-market-daily</a>。
-          数据可以自己在命令行里复查：<code>curl -s 'https://job720.goxba.com/api/jobs?limit=1'</code>
+          <a href="https://job720.goxba.com/blog/前端与客户端-2026-09-27?src=gh">job720.goxba.com/blog/前端与客户端-2026-09-27</a>。
+          数据可以自己在命令行里复查：<code>curl -s 'https://job720.goxba.com/api/hot?limit=1'</code>
         </p>
       </footer>
     </div>
