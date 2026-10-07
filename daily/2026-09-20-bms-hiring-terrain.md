@@ -47,9 +47,3 @@ Job720 把招聘方公开发布的岗位按城市、职能、技能摊开给人�
 ![Job720 岗位观察直达二维码](../assets/qr-observe.png)
 
 手机上看不到码也没关系，地址是 **job720.goxba.com** —— 数的是 2026-09-20 这一天。
-
-数据可以自己在命令行里复查：
-
-```bash
-curl -s 'https://job720.goxba.com/api/jobs?limit=1' | head -c 400
-```

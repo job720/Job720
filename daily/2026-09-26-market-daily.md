@@ -119,9 +119,3 @@ Job720 聚合 AI / 芯片 / 新能源 / 机器人 / 无人机等行业招聘方�
 ![Job720 直达二维码](assets/qr-observe.png)
 
 手机上看不到码也没关系，直接在浏览器里打开 [job720.goxba.com/blog/2026-09-26-market-daily](https://job720.goxba.com/blog/2026-09-26-market-daily?src=gh)。
-
-数据可以自己在命令行里复查：
-
-```bash
-curl -s 'https://job720.goxba.com/api/jobs?limit=1' | head -c 400
-```

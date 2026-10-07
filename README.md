@@ -34,14 +34,6 @@
 - 不替任何一家公司说话，也不评价任何一家公司；
 - 不替你下「该去哪家」的结论 —— 数摆在这儿，怎么读是你的事。
 
-## 顺手复查一下
-
-我们给的数，你自己也能拉：
-
-```bash
-curl -s 'https://job720.com/api/hot?limit=3' | head -c 400
-```
-
 ---
 
 ## What is Job720
@@ -65,11 +57,6 @@ Data is aggregated from **publicly posted job openings**. We do not rewrite job 
 we index and count. Live cross-sections by city and track: <https://job720.com>
 
 **Our stance.** We take no side for any company and we do not tell you which one to choose.
-
-```bash
-curl -s 'https://job720.com/api/hot?limit=3' | head -c 400
-```
-
 ---
 
 <sub>岗位条目的权利归各招聘方；本仓库只做索引与读数。Job titles and posting details belong to the respective employers; this repository only indexes and counts them.</sub>
