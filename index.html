@@ -502,6 +502,15 @@
       .helpline { margin: 16px 0 0; padding: 10px 12px; border-radius: var(--r-md); font-size: var(--t-sm);
         background: var(--chip); color: var(--fg); border: 1px solid var(--line); line-height: var(--lh-base); }
       .helpline b { font-size: var(--t-md); letter-spacing: 1px; color: var(--fg); }
+      /* 人机闸门那一格：真人看不见所以不会填。用移出视口而不是 display:none ——
+         前者脚本仍会当普通 input 填上（那就中了），后者会被部分填表器直接跳过（等于白设）。
+         aria-hidden + tabindex=-1 保证键盘走查也碰不到它。 */
+      .hp { position: absolute; left: -9999px; top: 0; width: 1px; height: 1px; overflow: hidden }
+      /* 「码发去哪了」那一条：与 .helpline（灰底面板）靠底色分开 ——
+         这一条说的是**这一秒的状态**，不是站内引导，所以压成白底描边。 */
+      .mailhint { margin: 0; padding: 10px 12px; border: 1px solid var(--line);
+        border-radius: var(--r-md); background: var(--bg); color: var(--fg-2);
+        font-size: var(--t-sm); line-height: var(--lh-base); }
       /* ── 收藏 ── */
       .gone { background: #6b72801f; color: var(--dim); text-decoration: line-through; }
       .jobs .title.off { color: var(--dim); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
@@ -1928,6 +1937,96 @@
       </nav>
 
         <ul class="obs-list">
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-11-深圳-芯片-2026-10-11.html">你要的「深圳的芯片岗」有 1,160 个，最挤的 5 家占了 44%</a>
+              <p class="obs-digest">「深圳的芯片岗」在招 1,160 个，最集中的 5 家占 44%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 11 日 ·
+                <a href="daily/2026-10-11-深圳-芯片-2026-10-11.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-11-深圳-家电-2026-10-11.html">「深圳的家电岗」的 1,336 个岗，为什么你总投到最挤的那一家</a>
+              <p class="obs-digest">「深圳的家电岗」在招 1,336 个，最集中的 5 家占 93%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 11 日 ·
+                <a href="daily/2026-10-11-深圳-家电-2026-10-11.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-11-武汉-汽车-2026-10-11.html">「东风汽车」一家占了 593 个，「武汉的汽车岗」剩下的散在哪儿</a>
+              <p class="obs-digest">「武汉的汽车岗」在招 1,466 个，最集中的 5 家占 95%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 11 日 ·
+                <a href="daily/2026-10-11-武汉-汽车-2026-10-11.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-11-广州-汽车-2026-10-11.html">「广州的汽车岗」还有 13 家公司在招，只是不在你以为的那几家</a>
+              <p class="obs-digest">「广州的汽车岗」在招 1,710 个，最集中的 5 家占 90%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 11 日 ·
+                <a href="daily/2026-10-11-广州-汽车-2026-10-11.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-11-北京-芯片-2026-10-11.html">「北京的芯片岗」的 1,548 个岗，为什么你总投到最挤的那一家</a>
+              <p class="obs-digest">「北京的芯片岗」在招 1,548 个，最集中的 5 家占 65%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 11 日 ·
+                <a href="daily/2026-10-11-北京-芯片-2026-10-11.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-11-北京-汽车-2026-10-11.html">每 100 个「北京的汽车岗」岗位，76 个攥在 5 家公司手里</a>
+              <p class="obs-digest">「北京的汽车岗」在招 1,391 个，最集中的 5 家占 76%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 11 日 ·
+                <a href="daily/2026-10-11-北京-汽车-2026-10-11.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-11-北京-央企-2026-10-11.html">「北京的央企岗」的 1,097 个岗，为什么你总投到最挤的那一家</a>
+              <p class="obs-digest">「北京的央企岗」在招 1,097 个，最集中的 5 家占 100%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 11 日 ·
+                <a href="daily/2026-10-11-北京-央企-2026-10-11.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-11-佛山-家电-2026-10-11.html">「美的」一家占了 843 个，「佛山的家电岗」剩下的散在哪儿</a>
+              <p class="obs-digest">「佛山的家电岗」在招 1,618 个，最集中的 5 家占 98%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 11 日 ·
+                <a href="daily/2026-10-11-佛山-家电-2026-10-11.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-11-上海-消费电子-2026-10-11.html">你要的「上海的消费电子岗」有 1,260 个，最挤的 5 家占了 97%</a>
+              <p class="obs-digest">「上海的消费电子岗」在招 1,260 个，最集中的 5 家占 97%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 11 日 ·
+                <a href="daily/2026-10-11-上海-消费电子-2026-10-11.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-11-上海-AI大模型-2026-10-11.html">你要的「上海的AI大模型岗」有 1,053 个，最挤的 5 家占了 81%</a>
+              <p class="obs-digest">「上海的AI大模型岗」在招 1,053 个，最集中的 5 家占 81%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 11 日 ·
+                <a href="daily/2026-10-11-上海-AI大模型-2026-10-11.md">markdown</a>
+              </p>
+            </li>
 
             <li class="obs-row">
               <a class="obs-title" href="daily/2026-10-10-汽车-2026-10-10.html">「制造与工艺」是「汽车这条赛道」要得最多的方向：5,243 个</a>
