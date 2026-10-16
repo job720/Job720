@@ -916,6 +916,104 @@
       .examlist .examsignup { flex: 0 0 auto; color: #b45309; font-size: var(--t-cap);
         background: #fef3c7; border-radius: var(--r-pill); padding: 1px 6px;
         font-variant-numeric: tabular-nums; white-space: nowrap; }
+      /* ── 国考岗位**卡片流**（/guokao）── 一张卡一个岗位：卡面只放"决定要不要看下去"的那几项,
+         其余收在展开里。`<details>` 是浏览器自带的展开控件 ⇒ 站内零 JS 也做得出来。
+         卡片底色/描边/圆角跟全站那一套一致（§2.2），只是这里由 <details> 承载。 */
+      .govcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 12px; margin: 14px 0 0; }
+      .govcard { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg); }
+      .govcard > summary { list-style: none; cursor: pointer; padding: 14px 16px; }
+      /* ⛔ 藏掉浏览器自带的那个 ▶ —— 它在职位名上方缩成一个小三角，
+         看着像"多余的圆点"；可点开的提示由 ::after 的「展开全部 ▾」说（两套都要写，各家内核不同）。 */
+      .govcard > summary::-webkit-details-marker { display: none; }
+      /* 收起时给一句"能点开"，展开后翻成"收起" —— 免得人以为卡就这么点内容 */
+      .govcard > summary::after { content: "展开全部 ▾"; display: block; margin-top: 8px;
+        color: #2563eb; font-size: var(--t-cap); }
+      .govcard[open] > summary::after { content: "收起 ▴"; }
+      .govcard-h { font-size: var(--t-md); color: var(--fg); }
+      .govcard-s { margin-top: 3px; color: var(--dim); font-size: var(--t-cap); }
+      .govcard-m { margin-top: 8px; color: var(--fg-2); font-size: var(--t-sm); line-height: 1.7; }
+      .govcard-m b { color: #b45309; font-variant-numeric: tabular-nums; }
+      .govcard-x { margin-top: 6px; color: var(--fg-2); font-size: var(--t-cap); line-height: 1.7; }
+      /* 展开后的字段表：左标签右值 */
+      .govcard-b { margin: 0; padding: 2px 16px 14px; border-top: 1px solid var(--line); }
+      .govcard-b > div { display: grid; grid-template-columns: 5.5em 1fr; gap: 10px;
+        padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: var(--t-sm); }
+      .govcard-b > div:last-child { border-bottom: 0; }
+      .govcard-b dt { color: var(--dim); margin: 0; }
+      .govcard-b dd { margin: 0; color: var(--fg-2); line-height: 1.7; }
+      /* 「更多筛选」那一层（/guokao 的筛选面板内）：不是每人都要选的三维收在这里，
+         用到的人点开、不用的人不被挡住。用 <details> ⇒ 零 JS。 */
+      .morefilter { margin: 12px 0 0; padding-top: 10px; border-top: 1px dashed var(--line); }
+      .morefilter > summary { list-style: none; cursor: pointer; color: #2563eb; font-size: var(--t-cap); }
+      .morefilter > summary::-webkit-details-marker { display: none; }
+      /* ── 考公主页（/kaogong）── 把一年岗位表算成结构：一条时限 + 七张小卡（每卡一句结论 + 条图）。
+         条图用 HTML+CSS 画（与站内其它图表的约定一致：只有环/折线/弧才上 SVG）。 */
+      .kgnow { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center;
+        justify-content: space-between; border: 1px solid var(--line); border-radius: var(--r-md);
+        padding: 14px 16px; margin: 18px 0 0; }
+      .kgclock { font-size: var(--t-lg); font-weight: 700; }
+      /* 标题点得动 —— 连到官方专题站（它指的就是那个站）。链接色用全站那颗蓝。 */
+      .kgclock a { color: #2563eb; }
+      .kgsub { color: var(--dim); font-size: var(--t-sm); margin-top: 2px; }
+      /* 这一行里「报名日期」与「岗位数」是**要被看见**的两件事：
+         日期给正常字色（原来跟说明灰字一个色），岗位数是条链接 —— 数字本身就该是入口。 */
+      .kgsub b { color: var(--fg); }
+      .kgsub-a { color: #2563eb; }
+      .kgactions { display: flex; gap: 8px; flex: 0 0 auto; flex-wrap: wrap; justify-content: flex-end; }
+      .kggrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 14px; margin: 12px 0 0; }
+      .kgcard { border: 1px solid var(--line); border-radius: var(--r-md); padding: 14px 16px; }
+      .kgcard h3 { margin: 0; font-size: var(--t-md); }
+      .kgcard .kgread { margin: 4px 0 12px; color: #b45309; font-size: var(--t-cap); }
+      .kgcard .kgread b { font-variant-numeric: tabular-nums; }
+      .kgbars { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+      /* ⚠️ 字号 --t-sm（14）不是 --t-cap（12）：这一块是**要读的数据**，12px 灰字在手机上就是看不清
+         （站里那条判据：只小不淡才算"辅助"，又小又淡就成了"没做完"）。颜色同理用 --fg-2。 */
+      /* ⚠️ 名字列 9.5em：字号提到 14px 之后 8.5em 只剩 119px，
+         而最长的标签「中共党员或共青团员」要 126px —— 会静默截成「中共党员或共青」。 */
+      .kgbars li { display: grid; grid-template-columns: 9.5em 1fr auto; gap: 8px;
+        align-items: center; font-size: var(--t-sm); }
+      .kgbars .kgn { color: var(--fg-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      /* 长名字（「国家税务总局山东省税务局」这种）必须换一种排法：
+         8.5em 一定被截，而前六行**前 8 个字还一模一样**（都是"国家税务总局"）——
+         截了等于六行写了同一个名字。所以改成两行：第一行「全名 + 数字」，第二行通栏的条。 */
+      .kgbars.stack li { grid-template-columns: 1fr auto; row-gap: 5px; }
+      .kgbars.stack .kgn { white-space: normal; overflow: visible; text-overflow: clip; }
+      .kgbars.stack .kgt { grid-column: 1 / -1; }
+      .kgbars .kgt { background: var(--chip); border-radius: var(--r-pill); height: 7px; overflow: hidden; }
+      .kgbars .kgt i { display: block; height: 100%; background: #2563eb; border-radius: var(--r-pill); }
+      .kgbars .kgv { color: var(--fg-2); font-variant-numeric: tabular-nums; }
+      /* 整页最该被读到的那一句（可报画像）：给底色，别混在普通说明里 */
+      .kgcallout { margin: 12px 0 0; padding: 12px 14px; border-radius: var(--r-sm);
+        background: #fef3c7; color: #7c2d12; font-size: var(--t-sm); line-height: 1.7; }
+      /* 卡片的两个分组标题（「岗位长什么样」/「门槛与竞争」）—— 用一道横线分开，
+         不是第三级标题，所以跟卡片 h3（--t-md 700）刻意不同色 */
+      .kgh3 { margin: 24px 0 2px; padding-top: 12px; border-top: 1px solid var(--line);
+        font-size: var(--t-sm); font-weight: 700; color: var(--fg); }
+      /* ── 历年折线（SVG）── 站内约定：条图用 HTML+CSS，折线/环/弧才上 SVG。
+         字号用 token（SVG 里 var() 同样生效），别手填 13px 这种插值。 */
+      .kgchartwrap { margin: 12px 0 0; border: 1px solid var(--line); border-radius: var(--r-md);
+        padding: 10px 8px 2px; }
+      .kgline { display: block; width: 100%; height: auto; }
+      .kgline .kgaxis { stroke: var(--line); stroke-width: 1; }
+      .kgline .kgpoly { fill: none; stroke: #2563eb; stroke-width: 2.5;
+        stroke-linejoin: round; stroke-linecap: round; }
+      .kgline .kgdot { fill: #2563eb; }
+      .kgline .kgval { fill: var(--fg-2); font-size: var(--t-sm); font-variant-numeric: tabular-nums; }
+      .kgline .kgyr { fill: var(--dim); font-size: var(--t-cap); }
+      /* ── 粘底报名条（/kaogong）── 滚到哪儿都能一步跳去报名。
+         写法照站内 `.cmpbar`（sticky + 蓝边）。⚠️ 覆盖规则必须写在**本定义之后**（§2.5 第 2 条）：
+         手机上底部还有那条固定 tab 栏，所以把它的底边抬到 tab 栏之上，别被盖住。 */
+      .kgreg { position: sticky; bottom: 14px; z-index: 5; display: flex; align-items: center;
+        gap: 10px; flex-wrap: wrap; margin: 26px 0 0; padding: 10px 12px;
+        border: 1px solid #2563eb55; border-radius: var(--r-md); background: var(--bg); }
+      .kgreg-t { font-size: var(--t-sm); color: var(--fg-2); }
+      .kgreg-t b { color: #2563eb; }
+      .kgreg .btn2 { flex: 0 0 auto; margin-left: auto; padding: 9px 14px; }
+      @media (max-width: 640px) {
+        .kgreg { bottom: calc(58px + env(safe-area-inset-bottom)); }
+      }
       /* ── 展会日历（/expo）── 行结构与上一块同构（日期|标题|标|城|区间），
          类名分开是为了两条线各自改样式不互相牵连（与 hotlist/unilist/linklist 同理）。 */
       .expolist { list-style: none; margin: 0; padding: 0; }
@@ -1160,11 +1258,14 @@
       /* Slogan：只在首页与登录页各一行，克制使用 */
       .slogan { margin: 2px 0 0; font-size: var(--t-sm); color: #2563eb; font-weight: 600;
         letter-spacing: .5px; }
-      /* ── 字标分色：Job 红 / 720 橙 ──
-         全站**唯一来源**：站脚、导航都挂这两个 class。og 图（docs/logo/og.html）
-         与组合标（mklogo.py）必须用同一组色值，改这里就要一起改，否则对外物料会分叉。 */
-      .wjob { color: #dc2626; }
-      .w720 { color: #f97316; }
+      /* ── 字标着色：单色蓝（2026-10-15 用户拍板，此前是 Job 红 / 720 橙）──
+         全站**唯一来源**：站脚、导航都挂这两个 class。og 图（docs/logo/og.html）、
+         图表品牌段（job720/charts.ex）、存成图的 canvas（jd_html/show）都取这一组色值，
+         改这里就要一起改，否则对外物料会分叉。资产由 docs/logo/mkassets-blue.exs 重出
+         （那道闸保证只动了颜色、没动形状）。
+         两个 class 都留着：分色随时可以改回来，而引用点不用跟着动。 */
+      .wjob { color: #2563eb; }
+      .w720 { color: #2563eb; }
       /* ── 站脚（品牌 / Slogan / 版权 / 备案）── */
       .sitefoot { max-width: 780px; margin: 0 auto; padding: 26px 16px 40px;
         border-top: 1px solid var(--line); margin-top: 34px; text-align: center; }
@@ -1283,7 +1384,7 @@
       .tr-slot .why { color: var(--dim); font-size: var(--t-cap); }
       .tr-badge { display: inline-block; font-size: var(--t-cap); padding: 1px 7px; border-radius: var(--r-pill);
         border: 1px solid var(--line); background: var(--chip); color: var(--dim);
-        margin-left: 6px; vertical-align: 1px; }
+        margin-left: 6px; vertical-align: 1px; white-space: nowrap; }
       .tr-badge-red { background: #dc26261a; border-color: #dc26264d; color: #dc2626; }
       .tr-badge-blue { background: #2563eb1a; border-color: #2563eb4d; color: #2563eb; }
       .tr-badge-green { background: #16a34a1a; border-color: #16a34a4d; color: #16a34a; }
@@ -1883,11 +1984,95 @@
         margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--line);
         font-size: var(--t-cap); font-weight: 600; color: var(--dim); }
 
+      /* 定制简历详情页多出来的那几行（键名 + 确认状态 + 改格表单）。
+         放在 .ressheet 那一组之后：同一段里靠后者生效。 */
+      .rsrow { border-top: 1px solid var(--line); padding: 10px 0; margin: 0; white-space: normal; }
+      .rsrow b { font-size: var(--t-sm); }
+      /* 「这句是我们自己补的」那一行：要**显眼**（终审：原来只是 dim 小字，不够），
+         但⛔ 不吓人 —— 用 `.warn` 那支琥珀色，与 `.rstip.bad` 的报错红分开。
+         ⚠️ 字号只走 token；⛔ 整段正文不加 nowrap（那是标签/徽标才要的）。
+         ⚠️ 放在 `.rsrow` 那一组之后：同特异性下靠后者生效（AGENTS §2.5）。 */
+      .rswarn { margin: 6px 0 0; padding: 6px 10px; border-radius: var(--r-sm);
+        background: var(--chip); border-left: 3px solid #b45309; color: #b45309;
+        font-size: var(--t-sm); line-height: var(--lh-base); }
+
+      /* ── 「简历纸」（.rs-sheet，见 Job720Web.ResumeSheet）────────────────────
+         对外那份是一张 **A4 竖版的纸**（210:297），两栏。它有自己的比例与配色，
+         与全站的卡片 / 列表不是一套 ⇒ 类名一律 `rs-` 前缀（AGENTS §2.6）。
+         ⛔ 这张纸**永远是浅色**（同 `Job720.Report.B2b.Style` 那条"打印必须浅色"）——
+            它是给人打印 / 另存成图的成品，深色模式下把纸染黑就印成一片黑。
+            所以这里不用 `--fg/--bg` 那几个会翻转的 token，改用纸自己的常量。
+         ⛔ 主色只有一个：`--rs-accent`。它不在 `:root` 里 —— 那是"这一份纸"的专有配色，
+            不是全站刻度；写在这里、随组件走，全站别处不认它（AGENTS §2.4/§2.6）。
+         ⚠️ `.ressheet.rs-doc` 的让位必须有（`.rs-doc` 是这一份纸多带的一个类）：
+            上面那个 `.ressheet` 还有"文件预览"那一处在用（`index.html.heex`），
+            不能把它的内边距改掉。 */
+      .ressheet.rs-doc { padding: 0; overflow: hidden; background: #fff; border-color: #e5e7eb; }
+      .rs-sheet { --rs-accent: #1e3a5f; --rs-ink: #16181d; --rs-sub: #4b5563;
+        --rs-mute: #6b7280; --rs-hair: #e5e7eb; --rs-side: #eef1f6;
+        /* 这张纸自己的**字号刻度**（都从 `:root` 的五档里取，⛔ 不插值）。
+           为什么要单开一层：屏幕与**打印**的 px 物理大小差 1.56 倍（96dpi vs 150dpi），
+           同一组 px 在打印时会大一圈、一页装不下 —— 打印那一档只需把这几个变量降一级
+           （见下面 `@media print`），不用把每个类的字号各写一遍。 */
+        --rs-name: var(--t-xl); --rs-title: var(--t-lg); --rs-body: var(--t-md);
+        --rs-sec: var(--t-sm); --rs-meta: var(--t-sm);
+        aspect-ratio: 210 / 297; display: grid; grid-template-rows: auto 1fr;
+        color: var(--rs-ink); }
+
+      /* 顶部主色带：大号姓名 + 定位句（左），联系方式 / 城市（右、小号浅色）。
+         ⚠️ 定位句是**一整句**（会很长）—— 左块必须 `flex: 1 1 auto; min-width: 0`
+            才能让它在这一块里换行；否则它会横向顶到右边那块联系方式底下，断得很难看。 */
+      .rs-band { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px;
+        padding: 26px 30px; background: var(--rs-accent); color: #fff; }
+      .rs-band-l { flex: 1 1 auto; min-width: 0; }
+      .rs-name { margin: 0; font-size: var(--rs-name); font-weight: 700; line-height: var(--lh-tight);
+        letter-spacing: .06em; white-space: nowrap; }
+      .rs-headline { margin: 10px 0 0; font-size: var(--rs-body); line-height: var(--lh-base);
+        color: rgba(255, 255, 255, .9); }
+      /* ⛔ 右上那几行是**正文**（城市那一句可能很长）—— 不 nowrap，给它一个宽度上限自己换行。 */
+      .rs-facts { flex: 0 0 auto; max-width: 20em; list-style: none; margin: 0; padding: 0;
+        text-align: right; font-size: var(--rs-meta); line-height: var(--lh-base);
+        color: rgba(255, 255, 255, .9); }
+
+      /* 两栏：左窄（约 1/3、浅灰底）、右主栏（2/3） */
+      .rs-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); min-height: 0; }
+      .rs-col { min-height: 0; padding: 24px 26px; }
+      .rs-col-l { background: var(--rs-side); border-right: 1px solid var(--rs-hair); }
+      .rs-col-r { padding: 24px 30px; }
+
+      /* 小标题：全篇一种样式（小号 + 字距 + 主色 + 一小段主色横线） */
+      .rs-sec-t { display: flex; align-items: center; gap: 8px; margin: 0 0 12px;
+        font-size: var(--rs-sec); font-weight: 700; letter-spacing: .16em; color: var(--rs-accent);
+        white-space: nowrap; }
+      .rs-sec-t::after { content: ""; flex: 1; height: 2px; background: var(--rs-accent); opacity: .26; }
+      .rs-sec + .rs-sec { margin-top: 26px; }
+
+      /* 左栏：一条一行（值）。中文正文行高 1.7，⛔ 不加 nowrap（会逐字断行）。 */
+      .rs-li { margin: 0 0 9px; font-size: var(--rs-body); line-height: var(--lh-base); color: var(--rs-sub); }
+
+      /* 右栏：每条经历 = 标题行 + 要点行 */
+      .rs-entry-h { margin: 18px 0 7px; font-size: var(--rs-title); font-weight: 700;
+        line-height: var(--lh-tight); color: var(--rs-ink); }
+      .rs-sec-t + .rs-entry-h { margin-top: 0; }
+      .rs-entry-b { margin: 0 0 8px; font-size: var(--rs-body); line-height: var(--lh-base); color: var(--rs-sub); }
+      .rs-entry-l { display: inline-block; margin-right: 8px; font-size: var(--rs-sec);
+        font-weight: 700; color: var(--rs-accent); white-space: nowrap; }
+
       .rs-row { display: flex; align-items: center; gap: 12px; margin-top: 10px;
         padding: 10px 14px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-md); }
       .rs-row-t { flex: 1; font-size: var(--t-sm); color: var(--fg); }
       .rs-locked, .rs-next { margin: 10px 0 0; padding: 10px 14px; border-radius: var(--r-md);
         background: var(--chip); font-size: var(--t-sm); line-height: var(--lh-base); color: var(--fg); }
+
+      /* 这一页那一块的主路：一个搜索框 + 结果行（选一条 → 走已有那条生成路）。
+         ⚠️ 与这一页同族，类名带 `rs-` 前缀（AGENTS §2.6）；对 `.btn2` 的让位写在本段 ——
+            它在 root 里排在 `.btn2` 定义之后（AGENTS §2.5：同特异性下靠后者生效）。
+         ⛔ 零 JS：普通 GET 表单 + 服务端渲染结果（AGENTS §一）。 */
+      .rs-search { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 0 12px; }
+      .rs-search input[type=search] { flex: 1 1 12em; min-width: 0; padding: 10px 12px;
+        border: 1px solid var(--line); border-radius: var(--r-md); font-size: var(--t-md);
+        font-family: inherit; background: var(--bg); color: var(--fg); }
+      .rs-search .btn2 { flex: 0 0 auto; }
 
       .reslist { list-style: none; margin: 0 0 10px; padding: 0; }
       .reslist li { display: flex; align-items: center; gap: 12px; padding: 10px 0;
@@ -1908,11 +2093,56 @@
          所以把导航、表单、提示条全收掉，只留那张纸（用户自己"另存为 PDF"就得到文件 ——
          ⛔ 服务器渲染不了 PDF，见 `Job720.Files` 的注释；这是零依赖的出文件那条路）。 */
       @media print {
+        /* 这一页印出来就是**一页 A4**（浏览器"另存为 PDF"得到的也是它）。 */
+        @page { size: A4 portrait; margin: 12mm; }
         .sitebar, .tabbar, .grouptabs, form, .rstip, .rs-hint, .rs-next, .rs-locked,
         .reslist, .sitefoot, .head .meta, .head h1 { display: none !important; }
         .wrap, .wrap.wide, .wrap.readw { width: auto; max-width: none; margin: 0; padding: 0; }
         .ressheet { border: 0; padding: 0; margin: 0; }
+        /* 纸的比例在屏幕上靠 `aspect-ratio` 撑着；打印交给 A4 页面本身，
+           ⛔ 别让 210:297 的框再把内容裁掉（那会丢字，不是"一页"）。 */
+        .ressheet.rs-doc { overflow: visible; background: #fff; }
+        /* 打印的 px 比屏幕大 1.56 倍（96dpi vs 150dpi），同一组字号会**一页装不下**
+           （实测：正文 17px 时溢出约 3 行、落到第 2 页）。所以打印时把这张纸自己的
+           字号刻度**各降一档**（仍是 `:root` 的五档），让一份简历稳稳落在一页 A4 里。 */
+        .rs-sheet { aspect-ratio: auto; --rs-title: var(--t-md); --rs-body: var(--t-sm);
+          --rs-sec: var(--t-cap); --rs-meta: var(--t-cap); }
+        .rs-col { padding: 16px 20px; }
+        .rs-sec + .rs-sec { margin-top: 16px; }
       }
+
+      /* ── 「简历出图」（/resume/:public_id/image）────────────────────────────
+         这一页的**产物是一张 PNG**：三个模版的 HTML/CSS 由**服务端**直出
+         （`Job720Web.ResumePoster`），台子就是它的显示框。
+         ⚠️ 类名一律 `rvt-` 前缀（AGENTS §2.6：这一页独有的形态，别跟别处撞）。
+         ⛔ 模版自己那套刻度**不在这里** —— 它在 `ResumePoster.css_tag/0` 里，
+            因为「保存成图片」要把那段原样内联进 SVG 的 `<foreignObject>`。
+         ⛔ 让位写在 `.btn2` 定义**之后**（AGENTS §2.5：同特异性下靠后者生效）。 */
+      .rvt-act { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 0 12px; }
+      .rvt-act .btn2 { flex: 0 0 auto; }
+      .rvt-lays { display: inline-flex; align-items: center; border: 1px solid var(--line);
+        border-radius: var(--r-md); overflow: hidden; }
+      .rvt-lay { border: 0; border-left: 1px solid var(--line); background: transparent;
+        font: inherit; font-size: var(--t-sm); font-weight: 600; color: var(--fg);
+        padding: 11px 16px; cursor: pointer; white-space: nowrap; }
+      .rvt-lay:first-child { border-left: 0; }
+      .rvt-lay[aria-pressed="true"] { background: #2563eb; color: #fff; }
+      .rvt-fname { font-size: var(--t-cap); color: var(--dim); }
+      /* 缩档那句如实说明（只在超上限时由 resume-render.js 显示）。 */
+      .rvt-note { font-size: var(--t-sm); color: var(--dim); margin: 0 0 12px; }
+      /* 显示框：**高度跟内容走** —— 宽固定 1240，高 = 内容实际高度 ×（显示宽 / 1240）。
+         `--rvt-h`（内容实际高度）与 `--rvt-k`（显示缩放）都由 `resume-render.js` 在量宽/量高之后写；
+         没跑 JS 时用兜底值，框仍看得见。⛔ 不再用 `aspect-ratio` 钉 4:5 —— 屏幕形状必须与导出的图一致。 */
+      .rvt-viewport { position: relative; width: 100%; height: calc(var(--rvt-h, 1550px) * var(--rvt-k, .5));
+        overflow: hidden; border: 1px solid var(--line); border-radius: var(--r-md); background: #fff; }
+      .rvt-scale { position: absolute; top: 0; left: 0; width: 1240px;
+        transform-origin: top left; transform: scale(var(--rvt-k, .5)); }
+
+      /* 「对外那份」那一块里通往出图页的那个入口按钮。
+         ⚠️ 让位写在 `.btn2` 定义**之后**（AGENTS §2.5：同特异性下靠后者生效）——
+            它的 `flex: 1 1 auto` 本意是"表单里铺满"，这里要它只占自己那么宽。
+            字号也一并不用 `--t-md`（大一号），与那一块的正文拉开层次。 */
+      .rsup .btn2 { flex: 0 0 auto; font-size: var(--t-md); }
 </style>
     <script type="application/ld+json">[{"@context":"https://schema.org","@id":"https://job720.com/#website","@type":"WebSite","alternateName":"Job720 · 科技与制造行业的求职信息枢纽","inLanguage":"zh-CN","name":"Job720","potentialAction":{"@type":"SearchAction","query-input":"required name=search_term_string","target":{"@type":"EntryPoint","urlTemplate":"https://job720.com/?q={search_term_string}"}},"url":"https://job720.com/"},{"@context":"https://schema.org","@type":"Organization","alternateName":["Job 720","job720","Job720 求职"],"brand":"Job720","description":"科技与制造行业的求职信息枢纽","logo":"https://job720.com/favicon.svg","name":"悦影悦靓人工智能科技（惠州）有限公司","url":"https://job720.com/"}]</script>
   </head>
@@ -1937,6 +2167,96 @@
       </nav>
 
         <ul class="obs-list">
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-16-深圳-运营-2026-10-16.html">「深圳的运营岗」的 918 个岗，为什么你总投到最挤的那一家</a>
+              <p class="obs-digest">「深圳的运营岗」在招 918 个，最集中的 5 家占 53%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 16 日 ·
+                <a href="daily/2026-10-16-深圳-运营-2026-10-16.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-16-深圳-后端与架构-2026-10-16.html">「字节跳动」一家占了 231 个，「深圳的后端与架构岗」剩下的散在哪儿</a>
+              <p class="obs-digest">「深圳的后端与架构岗」在招 859 个，最集中的 5 家占 40%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 16 日 ·
+                <a href="daily/2026-10-16-深圳-后端与架构-2026-10-16.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-16-杭州-市场与公关-2026-10-16.html">「杭州的市场与公关岗」有 1,015 个岗位，抢人的其实只有 5 家</a>
+              <p class="obs-digest">「杭州的市场与公关岗」在招 1,015 个，最集中的 5 家占 76%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 16 日 ·
+                <a href="daily/2026-10-16-杭州-市场与公关-2026-10-16.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-16-广州-制造与工艺-2026-10-16.html">每 100 个「广州的制造与工艺岗」岗位，89 个攥在 5 家公司手里</a>
+              <p class="obs-digest">「广州的制造与工艺岗」在招 891 个，最集中的 5 家占 89%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 16 日 ·
+                <a href="daily/2026-10-16-广州-制造与工艺-2026-10-16.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-16-宁波-机械与电气-2026-10-16.html">「宁波的机械与电气岗」还有 9 家公司在招，只是不在你以为的那几家</a>
+              <p class="obs-digest">「宁波的机械与电气岗」在招 1,188 个，最集中的 5 家占 98%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 16 日 ·
+                <a href="daily/2026-10-16-宁波-机械与电气-2026-10-16.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-16-北京-销售-2026-10-16.html">「字节跳动」一家占了 141 个，「北京的销售岗」剩下的散在哪儿</a>
+              <p class="obs-digest">「北京的销售岗」在招 940 个，最集中的 5 家占 37%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 16 日 ·
+                <a href="daily/2026-10-16-北京-销售-2026-10-16.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-16-北京-市场与公关-2026-10-16.html">「北京的市场与公关岗」有 1,025 个岗位，抢人的其实只有 5 家</a>
+              <p class="obs-digest">「北京的市场与公关岗」在招 1,025 个，最集中的 5 家占 32%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 16 日 ·
+                <a href="daily/2026-10-16-北京-市场与公关-2026-10-16.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-16-北京-制造与工艺-2026-10-16.html">「北京的制造与工艺岗」有 995 个岗位，抢人的其实只有 5 家</a>
+              <p class="obs-digest">「北京的制造与工艺岗」在招 995 个，最集中的 5 家占 70%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 16 日 ·
+                <a href="daily/2026-10-16-北京-制造与工艺-2026-10-16.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-16-上海-销售-2026-10-16.html">你要的「上海的销售岗」有 923 个，最挤的 5 家占了 33%</a>
+              <p class="obs-digest">「上海的销售岗」在招 923 个，最集中的 5 家占 33%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 16 日 ·
+                <a href="daily/2026-10-16-上海-销售-2026-10-16.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-16-上海-市场与公关-2026-10-16.html">投了十几家没回音？「上海的市场与公关岗」这 1,123 个岗，31% 攥在 5 家手里</a>
+              <p class="obs-digest">「上海的市场与公关岗」在招 1,123 个，最集中的 5 家占 31%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 16 日 ·
+                <a href="daily/2026-10-16-上海-市场与公关-2026-10-16.md">markdown</a>
+              </p>
+            </li>
 
             <li class="obs-row">
               <a class="obs-title" href="daily/2026-10-15-深圳-tcl-2026-10-15.html">「TCL在深圳的岗位」招 669 个：最多的是「职能与支持」，其余是什么</a>
