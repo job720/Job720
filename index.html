@@ -815,6 +815,23 @@
       .cols li > a:first-child:hover { color: #2563eb; }
       .cols li em { color: var(--dim); font-style: normal; font-weight: 400; font-size: var(--t-cap); margin-left: 4px; }
       .cols li a { color: #2563eb; text-decoration: none; font-size: var(--t-cap); }
+      /* 职库公司清单的档位组头（/companies）：默认「全部」收成一张地图，
+         <details> 零 JS，点开一档才展开那一档。展开的那一档横跨整行，
+         公司行才不会被挤成窄条；`auto-fit` 按 §2.5 的栅格规矩来。 */
+      .cmpmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 0 24px; margin-top: 4px; }
+      .cmpgroup { border-bottom: 1px solid var(--line); }
+      .cmpgroup > summary { list-style: none; cursor: pointer; padding: 12px 2px;
+        display: flex; align-items: baseline; gap: 8px; }
+      .cmpgroup > summary::-webkit-details-marker { display: none; }
+      .cmpgroup > summary span { color: var(--fg); font-weight: 600; white-space: nowrap; }
+      .cmpgroup > summary em { color: var(--dim); font-style: normal;
+        font-size: var(--t-cap); white-space: nowrap; }
+      .cmpgroup > summary::after { content: "展开 ▾"; margin-left: auto;
+        color: #2563eb; font-size: var(--t-cap); white-space: nowrap; }
+      .cmpgroup[open] > summary::after { content: "收起 ▴"; }
+      .cmpgroup[open] { grid-column: 1 / -1; border-bottom: 0; }
+      .cmpgroup > .cols { margin: 4px 0 12px; }
       .morebox .moreall { display: block; margin: 6px 0 0; font-size: var(--t-sm); color: #2563eb; text-decoration: none; }
       .freshline { display:block; }
       .freshline b { color: var(--fg); }
@@ -1290,6 +1307,18 @@
       .sitefoot .flogo { display: block; margin: 0 auto 10px; }
       .sitefoot .fbrand { margin: 0 0 4px; font-size: var(--t-md); font-weight: 700; letter-spacing: .4px; }
       .sitefoot .fsub { margin: 0 0 12px; font-size: var(--t-cap); color: var(--dim); }
+      /* 页脚的小程序码位（H5 上唯一的码位；顶部那条已撤）。只留码 + 「微信小程序」。
+         `.fqrs` 是一排码位：将来加 App 码照摆一个 `.fqr`，自动排开、窄屏换行。
+         码要有白底与内边距（扫码的静区），深色模式下也别让它变透明。 */
+      .sitefoot .fqrs { display: flex; justify-content: center; align-items: flex-start;
+        flex-wrap: wrap; gap: 20px; margin: 12px 0 16px; }
+      .sitefoot .fqr { display: inline-flex; flex-direction: column; align-items: center;
+        gap: 6px; color: var(--dim); text-decoration: none; }
+      .sitefoot .fqr img { display: block; width: 96px; height: 96px; padding: 6px;
+        background: #fff; border: 1px solid var(--line); border-radius: var(--r-sm); }
+      .sitefoot .fqr:hover img { border-color: #2563eb66; }
+      .sitefoot .fqr span { font-size: var(--t-cap); line-height: 1.4; white-space: nowrap; }
+      .sitefoot .fqr:hover span, .sitefoot .fqr:focus-visible span { color: #2563eb; }
       .sitefoot .flinks { margin: 0 0 10px; font-size: var(--t-cap); }
       /* ⚠️ 中文标签必须 nowrap：手机宽度下这些行会换行，而中文是**逐字**断的，
          标签会被拆成"上一行三个字、下一行一个字"。分隔符照旧可以断行。 */
@@ -1665,6 +1694,20 @@
       .rt-legend dt { color: var(--fg); } .rt-legend dd { margin: 0; color: var(--dim); }
       .rt-doc { margin: 14px 0; }
       .rt-doc > summary { cursor: pointer; font-size: var(--t-sm); color: #2563eb; padding: 4px 0; }
+      /* 后台长清单折叠（`AdminShell.fold`）：默认收起，只露标题 + 行数；
+         点开才占纵向空间。长表一律用它，⛔ 别各页自己写 <details>。 */
+      .admfold { margin: 12px 0 18px; border: 1px solid var(--line);
+        border-radius: var(--r-md); background: var(--bg); }
+      .admfold > summary { list-style: none; cursor: pointer; padding: 11px 14px;
+        display: flex; align-items: baseline; gap: 8px; font-size: var(--t-sm); font-weight: 600; }
+      .admfold > summary::-webkit-details-marker { display: none; }
+      .admfold > summary em { color: var(--dim); font-style: normal; font-weight: 400;
+        font-size: var(--t-cap); white-space: nowrap; }
+      .admfold > summary::after { content: "展开 ▾"; margin-left: auto; color: #2563eb;
+        font-size: var(--t-cap); white-space: nowrap; }
+      .admfold[open] > summary::after { content: "收起 ▴"; }
+      .admfold[open] > summary { border-bottom: 1px solid var(--line); }
+      .admfold-b { padding: 10px 14px 12px; overflow-x: auto; }
       .nowrap { white-space: nowrap; }
 
       /* ── 后台外壳：左栏大类 + 右侧顶上 tab（2026-09-25）─────────────────
@@ -1795,54 +1838,6 @@
       .uiempty-t { margin: 0 0 6px; font-size: var(--t-md); font-weight: 600; }
       .uiempty-h { margin: 0; color: var(--dim); font-size: var(--t-sm); line-height: var(--lh-base); }
       .uiempty-h a { color: #2563eb; text-decoration: none; font-weight: 600; margin-right: 10px; }
-      /* 「去微信小程序」那一格（`Job720Web.UI.mp_guide`，给 /ask 左栏当引导）。
-         靠**底色**区分语气 —— 它是提示条，不是卡片（AGENTS §2.2 的排除清单）。 */
-      .mpguide { margin: 0 0 14px; padding: 12px 14px; border-radius: var(--r-md);
-        background: var(--chip); border: 1px solid var(--line); }
-      .mpguide-t { margin: 0; font-size: var(--t-sm); font-weight: 600; }
-      .mpguide-n { margin: 4px 0 10px; font-size: var(--t-cap); color: var(--dim);
-        line-height: var(--lh-base); }
-      /* ⚠️ 中文标签必须 nowrap（AGENTS §2.5 第 1 条）。min-height 36 是"点得到"。 */
-      .mpguide-a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px;
-        border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg);
-        color: #2563eb; text-decoration: none; white-space: nowrap; font-size: var(--t-sm); }
-      .mpguide-a:hover { background: var(--accent-tint, #eef4ff); }
-      /* ── 去小程序那条（`Job720Web.UI.mp_top`，挂在 `SiteNav.bar` 上 ⇒ 手机版与 PC 版都在，
-         顶在导航下面）。用户 2026-10-06：「在手机版及 PC 版的 H5 里面，引导用户到微信小程序使用」。
-         ⛔ 它既不是卡片也不是提示条，是**入口**：浅蓝底 + 码 + 一句话 + 一颗按钮。
-         ⚠️ 中文标签一律 nowrap（AGENTS §2.5 第 1 条）；按钮 min-height 40 是"点得到"。
-         ⛔ `--accent` / `--accent-tint` **全站 :root 里没有**（只在那几档行业色里局部定义），
-            所以这里一律写 `var(--x, 兜底)` —— 光写 `var(--accent)` 会被判非法、
-            按钮变透明、整条只剩文字（2026-10-06 实测踩到）。 */
-      .mptop { display: flex; align-items: center; gap: 14px; margin: 0 0 16px;
-        padding: 10px 14px; background: var(--accent-tint, #eef4ff); border: 1px solid #cfe0fb;
-        border-radius: var(--r-md); }
-      .mptop-qr { flex: 0 0 auto; width: 140px; height: 140px; background: #fff;
-        border: 1px solid var(--line); border-radius: var(--r-sm); }
-      /* ⭐ 整条就是这一颗按键（用户 2026-10-06 晚：「一个按键就搞掂了」）。
-         ⚠️ 它**不能**用 `white-space: nowrap` 那一条通用规矩 —— 这句按键文案有 19 个字，
-            窄屏写 nowrap 会横向溢出；这里允许它折行（按钮折行不会像标签那样被切碎）。 */
-      .mptop-btn { flex: 1 1 auto; display: flex; align-items: center; justify-content: center;
-        min-height: 48px; padding: 10px 20px; border-radius: var(--r-md);
-        background: var(--accent, #2563eb); color: #fff; text-decoration: none; text-align: center;
-        font-size: var(--t-md); font-weight: 600; line-height: 1.4; }
-      /* ⛔ 深色模式必须**单独给** `.mptop` 一套底色 —— 用户 2026-10-06 报的就是这个：
-         它的浅蓝底是写死的，而 `--fg` 在深色下翻成浅色 ⇒ **浅字压浅底、整条看不清**。
-         （`--accent-tint` 全站 :root 里没有，只会走那个浅色兜底。） */
-      @media (prefers-color-scheme: dark) {
-        .mptop { background: #1b2430; border-color: #2c3b4e; }
-        .mptop-qr { border-color: #3a4757; }
-      }
-      /* 窄屏：**只剩那颗按键**（一步直达）—— 码收掉（人扫不了自己这块屏）。 */
-      @media (max-width: 640px) {
-        .mptop { padding: 10px 12px; margin-bottom: 14px; }
-        .mptop-qr { display: none; }
-        .mptop-btn { font-size: var(--t-sm); }
-      }
-      /* `/ask` 是"钉在视口上的一屏聊天"：带子与它左栏那一块**永远只有一块在场** ——
-         桌面（>760）用顶部那条、把左栏那块收掉；窄屏反过来（见 ask 模板里的注释）。 */
-      @media (min-width: 761px) { .askw .mpguide { display: none; } }
-      @media (max-width: 760px) { .askw .mptop { display: none; } }
       /* 一叠 `.uicard` 排成栅格（/today 那两块；同类页都用这一份，别再各写一遍 grid）。
          ⚠️ `auto-fit` 不是 `auto-fill`：项数少于列数时 `auto-fill` 会保留空轨道。 */
       .uigrid { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none;
@@ -2167,6 +2162,96 @@
       </nav>
 
         <ul class="obs-list">
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-20-金融-销售.html">「金融的销售岗」还有 75 家公司在招，只是不在你以为的那几家</a>
+              <p class="obs-digest">「金融的销售岗」在招 2,781 个，最集中的 5 家占 42%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 20 日 ·
+                <a href="daily/2026-10-20-金融-销售.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-20-芯片-职能与支持-2026-10-20.html">「芯片的职能与支持岗」的 2,695 个岗，为什么你总投到最挤的那一家</a>
+              <p class="obs-digest">「芯片的职能与支持岗」在招 2,695 个，最集中的 5 家占 30%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 20 日 ·
+                <a href="daily/2026-10-20-芯片-职能与支持-2026-10-20.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-20-芯片-硬件与芯片-2026-10-20.html">投了十几家没回音？「芯片的硬件与芯片岗」这 2,909 个岗，35% 攥在 5 家手里</a>
+              <p class="obs-digest">「芯片的硬件与芯片岗」在招 2,909 个，最集中的 5 家占 35%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 20 日 ·
+                <a href="daily/2026-10-20-芯片-硬件与芯片-2026-10-20.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-20-芯片-测试与质量-2026-10-20.html">投了十几家没回音？「芯片的测试与质量岗」这 2,628 个岗，40% 攥在 5 家手里</a>
+              <p class="obs-digest">「芯片的测试与质量岗」在招 2,628 个，最集中的 5 家占 40%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 20 日 ·
+                <a href="daily/2026-10-20-芯片-测试与质量-2026-10-20.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-20-消费电子-硬件与芯片-2026-10-20.html">每 100 个「消费电子的硬件与芯片岗」岗位，96 个攥在 5 家公司手里</a>
+              <p class="obs-digest">「消费电子的硬件与芯片岗」在招 2,983 个，最集中的 5 家占 96%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 20 日 ·
+                <a href="daily/2026-10-20-消费电子-硬件与芯片-2026-10-20.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-20-汽车-机械与电气-2026-10-20.html">每 100 个「汽车的机械与电气岗」岗位，75 个攥在 5 家公司手里</a>
+              <p class="obs-digest">「汽车的机械与电气岗」在招 3,400 个，最集中的 5 家占 75%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 20 日 ·
+                <a href="daily/2026-10-20-汽车-机械与电气-2026-10-20.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-20-机器人-制造与工艺-2026-10-20.html">每 100 个「机器人的制造与工艺岗」岗位，56 个攥在 5 家公司手里</a>
+              <p class="obs-digest">「机器人的制造与工艺岗」在招 2,915 个，最集中的 5 家占 56%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 20 日 ·
+                <a href="daily/2026-10-20-机器人-制造与工艺-2026-10-20.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-20-新能源-职能与支持-2026-10-20.html">「新能源的职能与支持岗」的 3,132 个岗，为什么你总投到最挤的那一家</a>
+              <p class="obs-digest">「新能源的职能与支持岗」在招 3,132 个，最集中的 5 家占 29%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 20 日 ·
+                <a href="daily/2026-10-20-新能源-职能与支持-2026-10-20.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-20-互联网-算法与AI-2026-10-20.html">投了十几家没回音？「互联网的算法与AI岗」这 3,440 个岗，78% 攥在 5 家手里</a>
+              <p class="obs-digest">「互联网的算法与AI岗」在招 3,440 个，最集中的 5 家占 78%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 20 日 ·
+                <a href="daily/2026-10-20-互联网-算法与AI-2026-10-20.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-20-互联网-后端与架构-2026-10-20.html">「互联网的后端与架构岗」还有 22 家公司在招，只是不在你以为的那几家</a>
+              <p class="obs-digest">「互联网的后端与架构岗」在招 2,470 个，最集中的 5 家占 90%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 20 日 ·
+                <a href="daily/2026-10-20-互联网-后端与架构-2026-10-20.md">markdown</a>
+              </p>
+            </li>
 
             <li class="obs-row">
               <a class="obs-title" href="daily/2026-10-19-苏州-家电-2026-10-19.html">每 100 个「苏州的家电岗」岗位，99 个攥在 5 家公司手里</a>
