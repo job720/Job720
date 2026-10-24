@@ -486,6 +486,15 @@
       .authform button { padding: 13px; border: 0; border-radius: var(--r-md); background: #2563eb;
         color: #fff; font-size: var(--t-md); font-weight: 600; font-family: inherit; cursor: pointer; }
       .authform .notice { margin: 6px 0 0; color: var(--dim); font-size: var(--t-cap); line-height: var(--lh-base); }
+      /* 扫码登录按钮。绿色是微信品牌色，不是本站刻度里的颜色 —— 只用于这一个按钮 */
+      .wxlogin { margin: 18px 0 0; }
+      .wxbtn { display: block; padding: 13px; border-radius: var(--r-md); background: #07c160;
+        color: #fff; font-size: var(--t-md); font-weight: 600; text-align: center; text-decoration: none; }
+      .wxbtn:hover { background: #06ad56; }
+      .wxnote { margin: 8px 0 0; color: var(--dim); font-size: var(--t-cap); line-height: var(--lh-base); }
+      .orsep { display: flex; align-items: center; gap: 10px; margin: 16px 0 0;
+        color: var(--dim); font-size: var(--t-cap); }
+      .orsep::before, .orsep::after { content: ""; flex: 1; height: 1px; background: var(--line); }
       .resend { margin: 10px 0 0; }
       .oldlogin { margin: 24px 0 0; border-top: 1px solid var(--line); padding-top: 12px; }
       .oldlogin > summary { cursor: pointer; color: var(--dim); font-size: var(--t-sm); list-style: none; }
@@ -546,6 +555,8 @@
       .medesc { display: block; font-size: var(--t-cap); color: var(--dim); line-height: var(--lh-base); }
       .medesc b { color: var(--fg); }
       .menews { color: #15803d; font-weight: 600; }
+      /* 「该跟进」不是好消息，别用绿色；与投递页的逾期日期同一颗红 */
+      .medue { color: #b3261e; font-weight: 600; }
       .mego { display: block; margin-top: 8px; font-size: var(--t-cap); color: #2563eb; }
       /* ── 投递跟踪 ── */
       .appcounts { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
@@ -558,6 +569,18 @@
       .appform { display: inline-flex; align-items: center; gap: 6px; margin: 0; }
       .appselect { padding: 6px 8px; border: 1px solid var(--line); border-radius: var(--r-sm);
         background: var(--bg); color: var(--fg); font-size: var(--t-cap); font-family: inherit; }
+      /* 投递详情：渠道/简历/跟进日。零 JS，收在 <details> 里，不占列表首屏 */
+      .appdetails { margin: 8px 0 0; }
+      .appdetails > summary { cursor: pointer; color: var(--dim); font-size: var(--t-cap);
+        white-space: nowrap; }
+      .appdetailform { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px;
+        margin: 8px 0 0; }
+      .appdetailform label { display: flex; flex-direction: column; gap: 4px;
+        color: var(--dim); font-size: var(--t-cap); white-space: nowrap; }
+      .appdetailform input, .appdetailform select { padding: 6px 8px;
+        border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--bg);
+        color: var(--fg); font-family: inherit; font-size: var(--t-cap); }
+      .applist .due { color: #b3261e; font-weight: 600; }
       .approw { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
         margin: 16px 0 0; padding: 12px; border: 1px solid var(--line); border-radius: var(--r-md);
         background: var(--chip); }
@@ -836,6 +859,9 @@
       .freshline { display:block; }
       .freshline b { color: var(--fg); }
       .isnew { background:#b4530914; color: #b45309; border-radius: var(--r-sm); padding:1px 6px; font-weight:600; }
+      /* 来源超过 7 天没在列表里见到：这是数据质量提示，不是错误 —— 用中性灰，别红成一片 */
+      .stale { background: var(--chip); color: var(--dim); border: 1px solid var(--line);
+        border-radius: var(--r-sm); padding:1px 6px; font-weight:500; white-space: nowrap; }
       /* ── 「标签即入口」：公司/城市/经验/学历/职能/赛道可点 ──
          ⚠️ `.entryline` 与 `.tags` **共用**这套药丸样式：列表页卡片从 2026-09-15 起改用
          `factline` / `entryline` 两个新类名，而 feed / cards / likes / compare / JD 页仍在用 `.tags`。
@@ -1500,6 +1526,16 @@
          所以给一个**下限宽度**让 cmpscroll 真正接管横向滚动。页面前缀 ag-，⛔ 别并进通用 .tbl。 */
       .ag-tbl { min-width: 980px; }
       .ag-tbl2 { min-width: 620px; }
+      /* ── 财务 · 支付订单（/admin/fin/orders）─────────────────────────────
+         同一病：八列表挂在 .cmpscroll 里，小屏没有下限就会被压成"每列一字高"
+         （"已支付·没发货"逐字竖排）。给下限，让横向滚动真的接管。前缀 fo-，⛔ 别并进通用 .tbl。 */
+      .fo-tbl { min-width: 1040px; }
+      /* 表头也左对齐：通用那条把 th 一律右对齐（给数字列），而这张表全是单号/人名/时间，
+         不改成左对齐就会出现"表头右、数据左"的错位（用户 2026-10-23 看到的就是这个）。 */
+      .fo-tbl th { text-align: left; }
+      /* 单号与时间戳都是**一个整体**（断在中间就没法拿去微信商户平台查）。
+         类名挂在格子上一列一个，⛔ 别用 nth-child —— 加一列就会悄悄指错格子。 */
+      .fo-mono { white-space: nowrap; }
       /* cron 这类参数值是**一个整体**（"0 4 * * *" 断在中间就没法读了） */
       .ag-val { white-space: nowrap; }
       .tlist { list-style: none; margin: 8px 0 0; padding: 0; }
@@ -1854,6 +1890,19 @@
       /* 一页最后那行小字（说清这一页的东西存在哪儿、谁能看到）。
          ⛔ 不要在模板里写 `style="margin-top:…"` —— 数值一律取自 token（规范 §2.4）。 */
       .uitail { margin: 26px 0 0; color: var(--dim); font-size: var(--t-cap); line-height: var(--lh-base); }
+      /* 收款二维码那一格（/member/order）：码要白底居中、四周留白（扫码识别率靠这个）。
+         ⛔ 别用 `.uicard` 顶：卡片是"一条记录"的壳，这一格是**一张图 + 一句等待**。 */
+      .payqr { margin: 16px 0; padding: 16px; border: 1px solid var(--line);
+        border-radius: var(--r-md); background: #fff; text-align: center; }
+      .payqr img { display: block; margin: 0 auto; width: 240px; height: 240px; }
+      .paytier { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .paytier b { font-size: var(--t-md); }
+      /* 开通按钮靠右、不跟着卡片宽度拉满（`.btn2` 在 flex 里是 flex:1 1 auto） */
+      .paytier form { margin-left: auto; }
+      .paytier .btn2 { flex: 0 0 auto; padding: 8px 18px; }
+      /* 价格整串不拆（货币符号与数字被折成两行就废了） */
+      .payprice { font-size: var(--t-md); font-weight: 600; white-space: nowrap; }
+      .payprice s { color: var(--dim); font-weight: 400; font-size: var(--t-sm); margin-left: 6px; }
       /* 页面骨架里的返回行（Page.shell 的 back 属性） */
       .backline { margin: 0 0 10px; font-size: var(--t-sm); }
       .backline a { color: var(--dim); text-decoration: none; }
@@ -2137,8 +2186,7 @@
          ⚠️ 让位写在 `.btn2` 定义**之后**（AGENTS §2.5：同特异性下靠后者生效）——
             它的 `flex: 1 1 auto` 本意是"表单里铺满"，这里要它只占自己那么宽。
             字号也一并不用 `--t-md`（大一号），与那一块的正文拉开层次。 */
-      .rsup .btn2 { flex: 0 0 auto; font-size: var(--t-md); }
-</style>
+      .rsup .btn2 { flex: 0 0 auto; font-size: var(--t-md); }</style>
     <script type="application/ld+json">[{"@context":"https://schema.org","@id":"https://job720.com/#website","@type":"WebSite","alternateName":"Job720 · 科技与制造行业的求职信息枢纽","inLanguage":"zh-CN","name":"Job720","potentialAction":{"@type":"SearchAction","query-input":"required name=search_term_string","target":{"@type":"EntryPoint","urlTemplate":"https://job720.com/?q={search_term_string}"}},"url":"https://job720.com/"},{"@context":"https://schema.org","@type":"Organization","alternateName":["Job 720","job720","Job720 求职"],"brand":"Job720","description":"科技与制造行业的求职信息枢纽","logo":"https://job720.com/favicon.svg","name":"悦影悦靓人工智能科技（惠州）有限公司","url":"https://job720.com/"}]</script>
   </head>
   <body>
@@ -2162,6 +2210,96 @@
       </nav>
 
         <ul class="obs-list">
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-24-深圳-销售-2026-10-24.html">每 100 个「深圳的销售岗」岗位，39 个攥在 5 家公司手里</a>
+              <p class="obs-digest">「深圳的销售岗」在招 1,348 个，最集中的 5 家占 39%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 24 日 ·
+                <a href="daily/2026-10-24-深圳-销售-2026-10-24.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-24-深圳-运营-2026-10-24.html">每 100 个「深圳的运营岗」岗位，44 个攥在 5 家公司手里</a>
+              <p class="obs-digest">「深圳的运营岗」在招 1,130 个，最集中的 5 家占 44%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 24 日 ·
+                <a href="daily/2026-10-24-深圳-运营-2026-10-24.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-24-深圳-市场与公关-2026-10-24.html">每 100 个「深圳的市场与公关岗」岗位，31 个攥在 5 家公司手里</a>
+              <p class="obs-digest">「深圳的市场与公关岗」在招 1,487 个，最集中的 5 家占 31%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 24 日 ·
+                <a href="daily/2026-10-24-深圳-市场与公关-2026-10-24.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-24-深圳-产品-2026-10-24.html">「深圳的产品岗」的 1,368 个岗，为什么你总投到最挤的那一家</a>
+              <p class="obs-digest">「深圳的产品岗」在招 1,368 个，最集中的 5 家占 60%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 24 日 ·
+                <a href="daily/2026-10-24-深圳-产品-2026-10-24.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-24-杭州-市场与公关-2026-10-24.html">每 100 个「杭州的市场与公关岗」岗位，66 个攥在 5 家公司手里</a>
+              <p class="obs-digest">「杭州的市场与公关岗」在招 1,129 个，最集中的 5 家占 66%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 24 日 ·
+                <a href="daily/2026-10-24-杭州-市场与公关-2026-10-24.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-24-宁波-机械与电气-2026-10-24.html">「宁波的机械与电气岗」有 1,189 个岗位，抢人的其实只有 5 家</a>
+              <p class="obs-digest">「宁波的机械与电气岗」在招 1,189 个，最集中的 5 家占 98%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 24 日 ·
+                <a href="daily/2026-10-24-宁波-机械与电气-2026-10-24.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-24-合肥-制造与工艺-2026-10-24.html">「合肥的制造与工艺岗」的 1,367 个岗，为什么你总投到最挤的那一家</a>
+              <p class="obs-digest">「合肥的制造与工艺岗」在招 1,367 个，最集中的 5 家占 84%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 24 日 ·
+                <a href="daily/2026-10-24-合肥-制造与工艺-2026-10-24.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-24-北京-市场与公关-2026-10-24.html">「北京的市场与公关岗」还有 208 家公司在招，只是不在你以为的那几家</a>
+              <p class="obs-digest">「北京的市场与公关岗」在招 1,546 个，最集中的 5 家占 31%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 24 日 ·
+                <a href="daily/2026-10-24-北京-市场与公关-2026-10-24.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-24-北京-制造与工艺-2026-10-24.html">「理想汽车」一家占了 327 个，「北京的制造与工艺岗」剩下的散在哪儿</a>
+              <p class="obs-digest">「北京的制造与工艺岗」在招 1,290 个，最集中的 5 家占 57%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 24 日 ·
+                <a href="daily/2026-10-24-北京-制造与工艺-2026-10-24.md">markdown</a>
+              </p>
+            </li>
+
+            <li class="obs-row">
+              <a class="obs-title" href="daily/2026-10-24-上海-硬件与芯片-2026-10-24.html">「上海的硬件与芯片岗」还有 147 家公司在招，只是不在你以为的那几家</a>
+              <p class="obs-digest">「上海的硬件与芯片岗」在招 1,542 个，最集中的 5 家占 40%。</p>
+              <p class="obs-date">
+                数的是 2026 年 10 月 24 日 ·
+                <a href="daily/2026-10-24-上海-硬件与芯片-2026-10-24.md">markdown</a>
+              </p>
+            </li>
 
             <li class="obs-row">
               <a class="obs-title" href="daily/2026-10-23-福州-ruijie.html">投「锐捷网络在福州的岗位」之前，先看你这类岗在不在里面</a>
